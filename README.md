@@ -1,33 +1,33 @@
 # SafeDeck
 
-**SafeDeck** adalah aplikasi manajemen kata sandi dan akun pribadi untuk Android yang mengutamakan privasi dan keamanan secara *offline-first*. Semua data tersimpan dan terenkripsi penuh di perangkat Anda—tanpa server, tanpa akun cloud, dan tanpa pelacakan.
+**SafeDeck** is an offline-first personal password and account vault for Android. All your credentials stay fully encrypted on your device—no cloud servers, no accounts required, and no tracking.
 
-## Unduh
+## Download
 
-- **Android (APK):** [Unduh SafeDeck v1.0.0](https://github.com/nluthfi/SafeDeck/releases/tag/v1.0.0)
+- **Android (APK):** [Download SafeDeck v1.0.0](https://github.com/nluthfi/SafeDeck/releases/tag/v1.0.0)
 
-> **Cara pemasangan:** Unduh file `SafeDeck-v1.0.0.apk` dari halaman Releases, buka di perangkat Android Anda, dan izinkan pemasangan dari sumber tidak dikenal jika diminta.
-
----
-
-## Fitur Utama
-
-- **Struktur Layanan -> Banyak Akun**: Kelompokkan beberapa akun (misalnya akun utama, smurf, kerja, atau bot) di bawah satu layanan seperti Steam, Discord, Google, dan lainnya.
-- **Kustomisasi Kartu Layanan**: Pilih kategori, warna identitas, ikon brand otomatis atau foto kustom, serta atur urutan layanan dengan *drag-and-drop*.
-- **Pencarian Cepat**: Cari layanan, nama akun, username, atau email secara instan.
-- **Generator Kata Sandi Kuat**: Buat kata sandi acak sepanjang 8–64 karakter dengan opsi huruf besar, huruf kecil, angka, simbol, dan filter karakter mirip (`i, l, 1, 0, O`).
-- **Indikator Kekuatan Sandi & Skor Keamanan**: Pantau kekuatan setiap kata sandi serta ringkasan keamanan seluruh brankas.
-- **Detail Akun Lengkap**: Simpan username/ID, email, kata sandi, kode pemulihan 2FA, dan catatan tambahan dengan tombol salin cepat.
-- **Multi-Bahasa**: Mendukung **Bahasa Indonesia** dan **English** (otomatis mengikuti bahasa perangkat dan dapat diganti kapan saja di menu Pengaturan).
-- **Cadangan Terenkripsi**: Ekspor dan impor data brankas dalam format file `.brankas` yang dilindungi kata sandi.
+> **Installation:** Download `SafeDeck-v1.0.0.apk` from the Releases page, open it on your Android device, and allow installing from unknown sources if prompted.
 
 ---
 
-## Keamanan
+## Features
 
-- **100% Offline & Lokal**: Tidak ada data yang dikirim ke server eksternal.
-- **Enkripsi Database AES-256 (SQLCipher)**: Seluruh isi brankas dienkripsi di perangkat dengan kunci yang disimpan di Android Keystore.
-- **PIN Master 6-Digit & Biometrik**: PIN di-hash lokal menggunakan PBKDF2-HMAC-SHA256 (100.000 iterasi) dan dilindungi kunci sementara 30 detik setelah 5 kali salah.
-- **Kunci Otomatis & Pembersihan Clipboard**: Aplikasi dapat mengunci otomatis saat ditinggalkan, dan kata sandi yang disalin dibersihkan otomatis dari clipboard (bawaan 30 detik).
-- **Proteksi Layar (`FLAG_SECURE`)**: Mencegah tangkapan layar (*screenshot*), perekaman layar, dan pratinjau di *recent apps*.
-- **Cadangan AES-256-GCM**: File cadangan `.brankas` dienkripsi terotentikasi dengan kata sandi pilihan Anda.
+- **Service -> Multi-Account Organization**: Group multiple accounts (e.g. main, alt, work, or bot) under a single service such as Steam, Discord, Google, and more.
+- **Customizable Service Cards**: Set categories, accent colors, auto-detected brand icons or custom photos, and reorder services with drag-and-drop.
+- **Instant Search**: Quickly search across services, account labels, usernames, and emails.
+- **Strong Password Generator**: Generate cryptographically random passwords (8–64 characters) with uppercase, lowercase, numbers, symbols, and an option to avoid ambiguous characters (`i, l, 1, 0, O`).
+- **Password Strength & Safety Score**: View per-account password strength indicators alongside an overall vault safety score.
+- **Complete Account Details**: Store usernames/IDs, emails, passwords, 2FA recovery codes, and notes with one-tap copy actions.
+- **Multi-Language Support**: Available in **English** and **Bahasa Indonesia** (follows your device language by default and can be switched anytime in Settings).
+- **Encrypted Backups**: Export and restore your vault as password-protected `.brankas` backup files.
+
+---
+
+## Security
+
+- **100% Offline & Local**: No data ever leaves your device.
+- **AES-256 Encrypted Database (SQLCipher)**: The local database is fully encrypted with a device-generated 256-bit key stored in Android Keystore.
+- **6-Digit Master PIN & Biometrics**: Your PIN is hashed locally with PBKDF2-HMAC-SHA256 (100,000 iterations) and protected by a 30-second lockout after 5 failed attempts.
+- **Auto-Lock & Clipboard Auto-Clear**: Automatically locks the vault when backgrounded and clears copied passwords from the clipboard (default: 30 seconds).
+- **Screen Protection (`FLAG_SECURE`)**: Blocks screenshots, screen recording, and app-switcher previews.
+- **AES-256-GCM Backups**: Exported `.brankas` files use authenticated encryption derived from your backup password.
