@@ -1,22 +1,27 @@
 # SafeDeck — Password & Vault Manager
 
-Aplikasi mobile brankas kata sandi pribadi yang aman, *offline-first*, dan berstandar industri untuk Android dan iOS, dibangun menggunakan Flutter, Dart 3, Material 3, dan Riverpod mengikuti acuan desain Figma.
+Aplikasi mobile brankas kata sandi pribadi yang aman, *offline-first*, dan berstandar industri untuk Android, dibangun menggunakan Flutter, Dart 3, Material 3, dan Riverpod.
+
+## Unduh APK (Release)
+
+Unduh versi rilis terbaru langsung dari GitHub Releases:
+
+- **v1.0.0 (Android APK):** [SafeDeck v1.0.0 Release](https://github.com/nluthfi/SafeDeck/releases/tag/v1.0.0)
 
 ---
 
 ## 1. Fitur Utama
 
-- **Penyimpanan Berstruktur Hirarki**: Pengelompokan Layanan (Steam, Discord, Google, dll.) yang memiliki banyak Akun (Akun Utama, Smurf, Bot, dll.).
-- **Tampilan Sesuai Desain Figma**:
-  - **Layar Kunci Aplikasi**: 6 titik indikator PIN, keypad 3x4 ergonomis, jalan pintas biometrik, dialog "Lupa PIN Master".
-  - **Beranda & Ringkasan Keamanan**: Metrik langsung (jumlah akun, layanan, persentase skor keamanan aman), filter pencarian real-time, chip kategori (Semua, Game, Sosial, Kerja, Hiburan), daftar kartu layanan beravatar warna.
-  - **Daftar Akun per Layanan**: Banner header layanan, daftar kartu akun dengan badge kekuatan sandi, tombol langsung "Salin ID" dan "Salin Password".
-  - **Detail Akun Lengkap**: Field nama pengguna, email, kata sandi tersamar dengan tombol buka/tutup intip & indikator bar kekuatan 4 segmen, kode pemulihan 2FA, catatan, metadata tanggal dibuat/diubah, serta tombol "Salin Semua Info Akun" dan "Hapus Akun Ini".
-  - **Tambah/Edit Layanan & Akun**: Pemilih swatch warna (6 palet), generator otomatis kata sandi kuat terintegrasi (⚡ Buat Password Kuat Otomatis), pratinjau kartu langsung, dan validasi form berbahasa Indonesia.
-  - **Pencarian Real-Time**: Debounce 250ms, pengelompokan hasil ke dalam kategori "LAYANAN" dan "AKUN".
-  - **Generator Password**: Kontrol panjang 8–64 karakter, opsi huruf besar, huruf kecil, angka, simbol, serta filter "Hindari Karakter Mirip (i, l, 1, 0, O)" menggunakan `Random.secure()`.
-  - **Pengaturan & Cadangan**: Konfigurasi kunci otomatis, biometrik, ubah PIN master, pembersihan papan klip (clipboard) otomatis, ekspor cadangan terenkripsi `.brankas` (AES-256-GCM), dan impor data cadangan.
-  - **State Khusus**: State kosong (*Empty State*), *shimmer loading skeleton*, toast kustom floating ("Kata Sandi Berhasil Disalin!"), modal menu opsi layanan, dan dialog konfirmasi hapus permanen.
+- **Penyimpanan Berstruktur Hirarki**: Pengelompokan Layanan (Steam, Discord, Google, dll.) yang memiliki banyak Akun (Akun Utama, Smurf, Bot, dll.) lengkap dengan ikon brand otomatis, foto kustom, dan *drag-to-reorder*.
+- **Multi-Bahasa (Indonesia & English)**: Otomatis mengikuti bahasa perangkat (*fallback* ke Bahasa Indonesia) dan dapat diganti langsung melalui menu **Pengaturan -> Bahasa** tanpa restart.
+- **Layar Kunci Aplikasi**: 6 titik indikator PIN, keypad 3x4 ergonomis, jalan pintas biometrik, *rate limiting* (lockout 30 detik setelah 5 kali salah), dan dialog "Lupa PIN Master".
+- **Beranda & Ringkasan Keamanan**: Metrik langsung (jumlah akun, layanan, persentase skor keamanan), filter pencarian real-time, chip kategori (Semua, Game, Sosial, Kerja, Hiburan), dan daftar kartu layanan beravatar warna.
+- **Daftar Akun per Layanan**: Banner header layanan, daftar kartu akun dengan badge kekuatan sandi, tombol langsung **Salin ID** dan **Salin Password**.
+- **Detail Akun Lengkap**: Field nama pengguna, email, kata sandi tersamar dengan tombol buka/tutup intip & indikator bar kekuatan 4 segmen, kode pemulihan 2FA, catatan, metadata tanggal dibuat/diubah, serta tombol **Salin Semua Info Akun** dan **Hapus Akun Ini**.
+- **Tambah/Edit Layanan & Akun**: Pemilih swatch warna (6 palet), pemilih ikon/foto layanan, generator otomatis kata sandi kuat terintegrasi, pratinjau kartu langsung, dan validasi form terlokalisasi.
+- **Pencarian Real-Time**: Debounce 250ms, pengelompokan hasil ke dalam kategori **LAYANAN** dan **AKUN**.
+- **Generator Password**: Kontrol panjang 8–64 karakter, opsi huruf besar, huruf kecil, angka, simbol, serta filter "Hindari Karakter Mirip (`i, l, 1, 0, O`)" menggunakan `Random.secure()`.
+- **Pengaturan & Cadangan**: Konfigurasi kunci otomatis, biometrik, ubah PIN master, pembersihan papan klip (clipboard) otomatis, pemilih bahasa, ekspor cadangan terenkripsi `.brankas` (AES-256-GCM), dan impor data cadangan.
 
 ---
 
@@ -25,6 +30,8 @@ Aplikasi mobile brankas kata sandi pribadi yang aman, *offline-first*, dan berst
 ```
 lib/
 ├── core/
+│   ├── l10n/
+│   │   └── locale_provider.dart      # State & persistensi bahasa (system/id/en) + helper lokalisasi
 │   ├── router/
 │   │   └── app_router.dart           # GoRouter dengan StatefulShellRoute & route redirect
 │   ├── security/
@@ -32,7 +39,7 @@ lib/
 │   │   ├── backup_service.dart       # Enkripsi & dekripsi file .brankas (AES-256-GCM + PBKDF2)
 │   │   └── security_service.dart     # Hash PIN PBKDF2, local_auth, secure storage, clipboard timer
 │   ├── theme/
-│   │   ├── app_colors.dart           # Palet warna design tokens Figma
+│   │   ├── app_colors.dart           # Palet warna design tokens
 │   │   ├── app_shadows.dart          # Shadow tokens (sm, md, lg)
 │   │   ├── app_typography.dart       # Tipografi Inter (Title, H1-H3, Body, Small, Caption)
 │   │   └── app_theme.dart            # ThemeData Material 3 & ThemeExtension
@@ -51,7 +58,9 @@ lib/
 │       ├── confirm_dialog.dart       # Dialog konfirmasi aksi destruktif
 │       ├── empty_state.dart          # Komponen tampilan kosong beserta kartu tips
 │       ├── field_card.dart           # Kartu label kapital + nilai + salin + intip sandi
+│       ├── service_brand_icon.dart   # Resolusi preset ikon brand & avatar layanan
 │       ├── service_card.dart         # Kartu layanan beravatar warna & chevron
+│       ├── service_icon_picker.dart  # Pemilih ikon preset / foto kustom
 │       ├── settings_row.dart         # Baris menu pengaturan
 │       ├── skeleton_card.dart        # Shimmer card loading
 │       └── strength_indicator.dart   # StrengthBadge & StrengthBar (4 segmen)
@@ -81,6 +90,10 @@ lib/
 │   │       └── service_options_bottom_sheet.dart
 │   └── settings/
 │       └── settings_screen.dart
+├── l10n/
+│   ├── app_id.arb                    # Terjemahan Bahasa Indonesia (template)
+│   ├── app_en.arb                    # Terjemahan Bahasa Inggris
+│   └── generated/                    # Output flutter gen-l10n
 └── main.dart
 ```
 
@@ -90,57 +103,65 @@ lib/
 
 1. **Enkripsi Penuh SQLCipher (Database)**:
    - Basis data SQLite dienkripsi penuh menggunakan `sqlcipher_flutter_libs`.
-   - Kunci enkripsi 256-bit dihasilkan secara acak melalui `Random.secure()` saat pertama kali aplikasi dijalankan dan disimpan di `flutter_secure_storage` (Android Keystore / iOS Keychain).
+   - Kunci enkripsi 256-bit dihasilkan secara acak melalui `Random.secure()` saat pertama kali aplikasi dijalankan dan disimpan di `flutter_secure_storage` (Android Keystore).
 2. **Hashing PIN Master 6-Digit**:
-   - Kata sandi/PIN master tidak pernah disimpan dalam bentuk plaintext.
-   - Menggunakan algoritma derivasi kunci **PBKDF2-HMAC-SHA256** dengan **100.000 iterasi** dan garam (*salt*) acak 128-bit unik per perangkat.
-   - **Analisis Batasan PIN 6-Digit**: PIN 6 digit memiliki ruang kunci terbatas ($10^6 = 1.000.000$ kombinasi). Oleh karena itu, proteksi utama diterapkan melalui:
-     - Pembatasan percobaan (*rate limiting*): jeda waktu bertambah dan kunci akun selama 30 detik setelah 5 kali salah.
-     - Penyimpanan hash dan salt di hardware-backed storage perangkat.
+   - PIN master tidak pernah disimpan dalam bentuk plaintext.
+   - Menggunakan algoritma derivasi kunci **PBKDF2-HMAC-SHA256** dengan **100.000 iterasi** dan *salt* acak 128-bit unik per perangkat.
+   - Dilengkapi *rate limiting*: kunci sementara selama 30 detik setelah 5 kali percobaan salah.
 3. **Pembersihan Otomatis Papan Klip (Clipboard Auto-Clear)**:
-   - Sandi atau ID yang disalin otomatis dihapus dari papan klip sistem setelah durasi yang dikonfigurasi (bawaan: 30 detik), meminimalkan risiko pencurian data oleh aplikasi pihak ketiga.
-4. **Proteksi Layar (FLAG_SECURE & Screen Blurring)**:
-   - Diaktifkan di level native (`MainActivity.kt` menggunakan `window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)`) untuk mencegah tangkapan layar (*screenshot*), perekaman layar, dan penyadapan via *app switcher preview*.
-5. **Format Cadangan Terenkripsi (.brankas)**:
+   - Sandi atau ID yang disalin otomatis dihapus dari papan klip sistem setelah durasi yang dikonfigurasi (bawaan: 30 detik).
+4. **Proteksi Layar (`FLAG_SECURE`)**:
+   - Diaktifkan di level native (`MainActivity.kt` menggunakan `WindowManager.LayoutParams.FLAG_SECURE`) untuk mencegah tangkapan layar (*screenshot*), perekaman layar, dan pratinjau *app switcher*.
+5. **Format Cadangan Terenkripsi (`.brankas`)**:
    - Menggunakan skema enkripsi terotentikasi **AES-256-GCM** dengan *nonce* acak 96-bit dan kunci yang diturunkan dari kata sandi cadangan pengguna (PBKDF2-HMAC-SHA256, 100.000 iterasi). File memvalidasi tag MAC dan integritas data saat impor.
 
 ---
 
-## 4. Cara Menjalankan & Menjalankan Pengujian
+## 4. Cara Menjalankan, Menguji & Build APK
 
 ### Prasyarat
-- Flutter SDK (versi stable 3.24+ / 3.50+) & Dart 3.5+
-- Android Studio / Xcode
+- Flutter SDK (stable) & Dart 3
+- Android Studio / Android SDK
 
 ### Langkah Instalasi & Menjalankan Aplikasi
 ```bash
 # 1. Unduh dependensi
 flutter pub get
 
-# 2. Generate kode Drift database (jika ada perubahan skema)
+# 2. Generate lokalisasi (jika ada perubahan file .arb)
+flutter gen-l10n
+
+# 3. Generate kode Drift database (jika ada perubahan skema)
 dart run build_runner build --delete-conflicting-outputs
 
-# 3. Jalankan analisis kode
+# 4. Jalankan analisis kode
 flutter analyze
 
-# 4. Jalankan seluruh rangkaian tes (19 tes lulus)
+# 5. Jalankan seluruh rangkaian tes (30 tes lulus)
 flutter test
 
-# 5. Jalankan aplikasi di emulator atau perangkat fisik
+# 6. Jalankan aplikasi di emulator atau perangkat fisik
 flutter run
+
+# 7. Build APK release
+flutter build apk --release
 ```
 
 ---
 
 ## 5. Rangkaian Pengujian (Test Suite)
 
-Proyek ini dilengkapi dengan 19 tes otomatis tanpa error:
-- `test/password_strength_test.dart`: Evaluasi rumus kekuatan kata sandi dan skor segmen 0–4.
-- `test/password_generator_test.dart`: Pengujian panjang karakter, karakter set wajib, dan penghindaran karakter mirip.
+Proyek ini dilengkapi dengan **30 tes otomatis** tanpa error:
+- `test/account_detail_date_test.dart`: Pengujian format tanggal di halaman detail akun tanpa `LocaleDataException`.
 - `test/backup_encryption_test.dart`: Pengujian ekspor AES-256-GCM `.brankas`, verifikasi MAC, penolakan kata sandi salah, dan pemulihan data.
-- `test/database_repository_test.dart`: Pengujian operasi CRUD database Drift in-memory, cascade delete, dan kalkulasi ringkasan keamanan.
-- `test/security_service_test.dart`: Pengujian deterministik derivasi PBKDF2 dan verifikasi salt.
 - `test/card_widgets_test.dart`: Widget test interaksi dan rendering `ServiceCard` dan `AccountCard`.
-- `test/form_validation_test.dart`: Pengujian validasi form tambah layanan dan akun dengan pesan berbahasa Indonesia.
-- `test/widget_test.dart`: Smoke test inisialisasi aplikasi Brankas dan galeri komponen.
+- `test/database_repository_test.dart`: Pengujian operasi CRUD database Drift in-memory, *cascade delete*, *reorder*, dan kalkulasi ringkasan keamanan.
+- `test/delete_service_flow_test.dart`: Pengujian alur hapus layanan dari bottom sheet.
+- `test/form_validation_test.dart`: Pengujian validasi form tambah layanan dan akun.
+- `test/localization_test.dart`: Pengujian resolusi locale (`en`/`id`/fallback) dan pergantian bahasa langsung di Pengaturan.
 - `test/main_flow_test.dart`: Integration test alur utama (Buat PIN Master -> Buka Kunci -> Lihat Daftar Layanan Steam, Discord, Google).
+- `test/password_generator_test.dart`: Pengujian panjang karakter, karakter set wajib, dan penghindaran karakter mirip.
+- `test/password_strength_test.dart`: Evaluasi rumus kekuatan kata sandi dan skor segmen 0–4.
+- `test/security_service_test.dart`: Pengujian deterministik derivasi PBKDF2 dan verifikasi salt.
+- `test/service_brand_icon_test.dart`: Pengujian deteksi dan resolusi 11 preset ikon brand layanan.
+- `test/widget_test.dart`: Smoke test inisialisasi aplikasi SafeDeck dan galeri komponen.
