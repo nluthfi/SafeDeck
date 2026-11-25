@@ -10,6 +10,17 @@
 
 ---
 
+## How It Works
+
+![SafeDeck App Flow](docs/app_flow.jpg)
+
+1. **Unlock Vault** — Enter your 6-digit Master PIN or unlock instantly with biometrics.
+2. **Browse Services** — Check your security overview, filter by category, or search across saved services.
+3. **Multi-Account Access** — Open any service to view all linked accounts and copy IDs or passwords in one tap.
+4. **Generate & Backup** — Create strong random passwords and export encrypted `.brankas` backups anytime.
+
+---
+
 ## Features
 
 - **Service -> Multi-Account Organization**: Group multiple accounts (e.g. main, alt, work, or bot) under a single service such as Steam, Discord, Google, and more.
